@@ -1,5 +1,7 @@
 package com.demoapi.hepers;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -29,10 +31,11 @@ public class ResponseUtil {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 
-    public <T> ResponseEntity<ResponseData<T>> handleSuccess(T payload) {
+    public <T> ResponseEntity<ResponseData<T>> handleSuccess(Optional<String> message, Optional<T> payload) {
         ResponseData<T> responseData = new ResponseData<>();
         responseData.setStatus(true);
-        responseData.setPayload(payload);
+        message.ifPresent(msg -> responseData.getMessage().add(msg));
+        payload.ifPresent(responseData::setPayload);
         return ResponseEntity.ok(responseData);
     }
 }

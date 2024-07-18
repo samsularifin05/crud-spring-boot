@@ -3,6 +3,8 @@ package com.demoapi.model.entities;
 import java.io.Serializable;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Supplier implements Serializable {
     private String email;
 
     @ManyToMany(mappedBy = "supplier")
+    @JsonBackReference
     private Set<Product> products;
 
     public Long getId() {

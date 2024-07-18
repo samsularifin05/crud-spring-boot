@@ -1,5 +1,7 @@
 package com.demoapi.controllers;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +48,9 @@ public class SupplierController {
         }
 
         Supplier supplier = modelMapper.map(supplierDto, Supplier.class);
+        Supplier savedSupplier = supplierService.save(supplier);
 
-        return responseUtil.handleSuccess(supplierService.save(supplier));
+        return responseUtil.handleSuccess(Optional.of("Supplier saved successfully"), Optional.of(savedSupplier));
 
     }
 
@@ -74,8 +77,9 @@ public class SupplierController {
         }
 
         Supplier supplier = modelMapper.map(supplierDto, Supplier.class);
+        Supplier savedSupplier = supplierService.save(supplier);
 
-        return responseUtil.handleSuccess(supplierService.save(supplier));
+        return responseUtil.handleSuccess(Optional.of("Supplier saved successfully"), Optional.of(savedSupplier));
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,8 @@
 package com.demoapi.controllers;
 
+import java.util.Optional;
+
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.demoapi.dto.ResponseData;
 import com.demoapi.hepers.ResponseUtil;
 import com.demoapi.model.entities.Product;
+import com.demoapi.model.entities.Supplier;
 import com.demoapi.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -28,7 +32,9 @@ public class ProductController {
             return responseUtil.handleErrors(errors);
         }
 
-        return responseUtil.handleSuccess(productService.save(product));
+        return responseUtil.handleSuccess(Optional.of("Supplier saved successfully"),
+                Optional.of(productService.save(product)));
+
     }
 
     @GetMapping()
@@ -58,6 +64,11 @@ public class ProductController {
         productService.removeOne(id);
         ;
         return "Data Behasil Dihapus";
+    }
+
+    @PostMapping("/{id}")
+    public void addSupplier(@RequestBody Supplier supplier, @PathVariable("id") Long productId) {
+        productService.addSupplier(supplier, productId);
     }
 
 }
